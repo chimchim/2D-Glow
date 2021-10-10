@@ -31,11 +31,11 @@ public class GameLoop : MonoBehaviour
         MapGenerator.GenerateMap();
         Game = new GameManager(MapGenerator, MGS, Tiles);
         UpdateMapTiles = new UpdateMapTiles(Tilemap);
-        UpdateMapTiles.Initiate(Game);
+        UpdateMapTiles.Initiate(Game, new Vector2Int(70, 60));
         if (UsePlayer)
             Camera.main.GetComponent<CameraFollow>().SetplayerClient(Player, Game);
 
-        Player.transform.position = new Vector3(10, 10, 0);
+        Player.transform.position = new Vector3(70, 60, 0);
     }
 
     public void Zoom()
@@ -56,6 +56,8 @@ public class GameLoop : MonoBehaviour
         float xTranslate = Input.GetAxis("Horizontal") * Speed * Time.deltaTime;
         Player.transform.position = new Vector3(xTranslate, yTranslate, 0) + Player.transform.position;
         UpdateMapTiles.GraphicMap.Position = Player.transform.position;
+        UpdateMapTiles.ColliderMaps[0].Position = Player.transform.position;
+        UpdateMapTiles.ColliderMaps[1].Position = Player.transform.position + new Vector3(3,3);
         UpdateMapTiles.Update(Game);
         Zoom();
         

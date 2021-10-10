@@ -13,21 +13,16 @@ namespace Map
             Msg = mgs;
             Parent = new GameObject();
             Parent.name = "Tileparent";
-            OutlinePool = new Stack<Transform>();
-            BlockPool = new Stack<Transform>();
-            for (int i = 0; i < 3000; i++)
-                BlockPool.Push(CreateTileForPool(TileType.Block));
-            for (int i = 0; i < 3000; i++)
-                BlockPool.Push(CreateTileForPool(TileType.Outline));
-
+            Colliders = new Stack<Transform>();
+            for (int i = 0; i < 300; i++)
+                Colliders.Push(CreateTileForPool());
         }
 
         public GameObject Parent;
         public MapGeneratorSettings Msg;
         public Tiles PrefabTiles;
         public List<GameObject> TileStack;
-        public Stack<Transform> BlockPool;
-        public Stack<Transform> OutlinePool;
+        public Stack<Transform> Colliders;
         public TileData[,] Tilemap;
 
         public void CreateMapFromTiledata(TileData[,] perlinMap)
@@ -35,41 +30,24 @@ namespace Map
             Tilemap = perlinMap;
         }
 
-        public Transform PopBlock(TileType type)
-        {
-            switch (type)
-            {
-                case TileType.Block:
-                    if (BlockPool.Count > 0)
-                        return BlockPool.Pop();
-                    return CreateTileForPool(TileType.Block);
-                case TileType.Outline:
-                    if (OutlinePool.Count > 0)
-                        return OutlinePool.Pop();
-                    return CreateTileForPool(TileType.Outline);
-            }
 
-            Debug.LogError("POP ERROR");
-            return null;
+        public Transform PopTransform(Vector2Int position)
+        {
+            if(Colliders.Count == 0)
+                Colliders.Push(CreateTileForPool());
+            var t = Colliders.Pop();
+            t.position = new Vector3(position.x, position.y);
+            t.name = $"x:{position.x}, y:{position.y}";
+            return t;
         }
-
-        public TileInUse NewTileInUse(TileData tile, TileCreator tc)
+        public void RecycleCollider(Transform t)
         {
-            var type = tile.Type;
-            Transform transform = null;
-            if (type == TileType.Block)
-                transform = tc.PopBlock(TileType.Block);
-            if (type == TileType.Outline)
-                transform = tc.PopBlock(TileType.Outline);
-
-            var position = new Vector2(tile.Index.x, tile.Index.y);
-            var block = TileInUse.Make(transform, tile, position);
-            return block;
+            t.position = new Vector3(-10, -10);
+            Colliders.Push(t);
         }
-
-        private Transform CreateTileForPool(TileType type)
+        private Transform CreateTileForPool()
         {
-            var go = GameObject.Instantiate(PrefabTiles.TestTile, new Vector2(-10, -10), Quaternion.identity);
+            var go = GameObject.Instantiate(PrefabTiles.Collider, new Vector2(-10, -10), Quaternion.identity);
             go.transform.parent = Parent.transform;
             return go.transform;
         }
@@ -79,7 +57,7 @@ namespace Map
             var td = tiledata[x, y];
             if (td != null)
             {
-                var go = GameObject.Instantiate(PrefabTiles.TestTile, new Vector2(x, y),
+                var go = GameObject.Instantiate(PrefabTiles.Collider, new Vector2(x, y),
                     Quaternion.identity);
                 go.transform.parent = Parent.transform;
                 TileStack.Add(go);

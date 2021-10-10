@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c45af08ab4bc4d54fa39cdf4c937c8b9, type: 3}
   m_Name: Tiles
   m_EditorClassIdentifier: 
-  TestTile: {fileID: 2523738559068455853, guid: 64ea3ade197b0134886f857f4fff5d39, type: 3}
-  RuleTile: {fileID: 11400000, guid: 18e4b1c0f84e1474895b0e08945f4a27, type: 2}
-  NullTile: {fileID: 11400000, guid: 2f1ec32762bb0b94cb86b6890506bba2, type: 2}
+  Collider: {fileID: 2523738559068455853, guid: 64ea3ade197b0134886f857f4fff5d39, type: 3}
+  Green: {fileID: 11400000, guid: 18e4b1c0f84e1474895b0e08945f4a27, type: 2}
+  Brown: {fileID: 11400000, guid: 8dd806ccec053ba42a4709db3efdc44e, type: 2}

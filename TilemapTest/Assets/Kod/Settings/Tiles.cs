@@ -10,8 +10,8 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "Data", menuName = "Prefabs/Tiles", order = 1)]
     public class Tiles : ScriptableObject
     {
-        public GameObject TestTile;
-        public RuleTile RuleTile;
-        public RuleTile NullTile;
+        public GameObject Collider;
+        public RuleTile Green;
+        public RuleTile Brown;
     }
 }

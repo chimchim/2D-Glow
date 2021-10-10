@@ -12,15 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce5ca3c17fe91744a9d5a9c5b0ae292f, type: 3}
   m_Name: MapGeneratorSettings
   m_EditorClassIdentifier: 
-  ColorSeed: 12
-  MapHeight: 400
-  MapWidth: 400
+  MapHeight: 1500
+  MapWidth: 1500
   HeightBound: 8
   WidthBound: 8
   TopBoundOffset: 4
-  PerlinZoom: 0.03
+  PerlinZoom: 0.01
   PerlinShift: {x: 0, y: 0}
-  CubeSize: 0
-  StartPos: {x: 0, y: 0}
-  ClientSize: {x: 50, y: 50}
-  OtherSize: {x: 0, y: 0}
+  ClientSize: {x: 140, y: 140}
+  ColliderSize: {x: 12, y: 24}

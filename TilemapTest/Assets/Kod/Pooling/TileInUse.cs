@@ -21,36 +21,6 @@ public class TileInUse
     }
 
 
-
-
-    public void Recycle(TileCreator tc)
-    {
-
-        try
-        {
-            switch (TileData.Type)
-            {
-                case TileType.Block:
-                    Transform.position = new Vector2(-10, -10);
-                    tc.BlockPool.Push(Transform);
-                    break;
-                case TileType.Outline:
-                    Transform.position = new Vector2(-10, -10);
-                    tc.OutlinePool.Push(Transform);
-                    break;
-            }
-
-            Transform = null;
-            TileData = null;
-            _pool.Recycle(this);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-
-    }
     public void Recycle()
     {
     }
